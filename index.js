@@ -19,7 +19,6 @@ const foo = async () => {
             }))
         }))
 
-
         const folders = await fs.readdir(baseFolderPath);
 
         for (const folder of folders) {
