@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { IUser } from "../interfaces/user.interface";
+// import { IUser } from "../interfaces/user.interface";
 import { userService } from "../services/user.service";
 
 class UserController {
@@ -15,7 +15,7 @@ class UserController {
 
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const dto = req.body as any;
+      const dto = req.body as any; //TODO type
       const result = await userService.create(dto);
       res.status(201).json(result);
     } catch (e) {
@@ -25,34 +25,36 @@ class UserController {
 
   public async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const userId = Number(req.params.userId);
+      const userId = req.params.userId;
       const result = await userService.getById(userId);
-      res.status(200).json(result);
+      res.json(result);
     } catch (e) {
       next(e);
     }
   }
 
+  //TODO hw
   public async updateById(req: Request, res: Response, next: NextFunction) {
-    try {
-      const userId = Number(req.params.userId);
-      const dto = req.body as IUser;
-
-      const result = await userService.updateById(userId, dto);
-      res.status(201).json(result);
-    } catch (e) {
-      next(e);
-    }
+    // try {
+    //   const userId = Number(req.params.userId);
+    //   const dto = req.body as IUser;
+    //
+    //   const result = await userService.updateById(userId, dto);
+    //   res.status(201).json(result);
+    // } catch (e) {
+    //   next(e);
+    // }
   }
 
+  //TODO hw
   public async deleteById(req: Request, res: Response, next: NextFunction) {
-    try {
-      const userId = Number(req.params.userId);
-      await userService.deleteById(userId);
-      res.sendStatus(204);
-    } catch (e) {
-      next(e);
-    }
+    // try {
+    //   const userId = Number(req.params.userId);
+    //   await userService.deleteById(userId);
+    //   res.sendStatus(204);
+    // } catch (e) {
+    //   next(e);
+    // }
   }
 }
 
