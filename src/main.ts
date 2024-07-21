@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "./errors/api-error";
-import { fsService } from "./fs.service";
 import { userRouter } from "./routers/user.router";
 
 const app = express();
@@ -9,60 +8,6 @@ app.use(express.json()); // щоб база даних розуміла об'є�
 app.use(express.urlencoded({ extended: true })); // щоб база даних розуміла об'єкт який приходить в req
 
 app.use("/users", userRouter);
-
-app.get("/users/:userId", async (req: Request, res: Response) => {
-  try {
-    const userId = Number(req.params.userId);
-
-    const users = await fsService.read();
-    const user = users.find((user) => user.id === userId);
-    if (!user) {
-      return res.status(404).json("User not found!");
-    }
-    res.json(user);
-  } catch (e) {
-    res.status(500).json(e.message);
-  }
-});
-app.put("/users/:userId", async (req: Request, res: Response) => {
-  try {
-    const userId = Number(req.params.userId);
-    const { name, email, password } = req.body;
-
-    const users = await fsService.read();
-    const user = users.find((user) => user.id === userId);
-    if (!user) {
-      return res.status(404).json("User not found");
-    }
-    if (name) user.name = name;
-    if (email) user.email = email;
-    if (password) user.password = password;
-
-    await fsService.write(users);
-
-    res.status(201).json(user);
-  } catch (e) {
-    res.status(400).json(e.message);
-  }
-});
-
-app.delete("/users/:userId", async (req: Request, res: Response) => {
-  try {
-    const userId = Number(req.params.userId);
-
-    const users = await fsService.read();
-    const index = users.findIndex((user) => user.id === userId);
-    if (index === -1) {
-      return res.status(404).json("User not found");
-    }
-    users.splice(index, 1);
-    await fsService.write(users);
-
-    res.sendStatus(204);
-  } catch (e) {
-    res.status(500).json(e.message);
-  }
-});
 
 app.use(
   "*",
