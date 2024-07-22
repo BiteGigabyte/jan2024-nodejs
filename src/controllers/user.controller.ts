@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-// import { IUser } from "../interfaces/user.interface";
+import { IUser } from "../interfaces/user.interface";
 import { userService } from "../services/user.service";
 
 class UserController {
@@ -35,26 +35,26 @@ class UserController {
 
   //TODO hw
   public async updateById(req: Request, res: Response, next: NextFunction) {
-    // try {
-    //   const userId = Number(req.params.userId);
-    //   const dto = req.body as IUser;
-    //
-    //   const result = await userService.updateById(userId, dto);
-    //   res.status(201).json(result);
-    // } catch (e) {
-    //   next(e);
-    // }
+    try {
+      const userId = req.params.userId;
+      const dto = req.body as IUser;
+
+      const result = await userService.updateById(userId, dto);
+      res.status(201).json(result);
+    } catch (e) {
+      next(e);
+    }
   }
 
   //TODO hw
   public async deleteById(req: Request, res: Response, next: NextFunction) {
-    // try {
-    //   const userId = Number(req.params.userId);
-    //   await userService.deleteById(userId);
-    //   res.sendStatus(204);
-    // } catch (e) {
-    //   next(e);
-    // }
+    try {
+      const userId = Number(req.params.userId);
+      await userService.deleteById(userId);
+      res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
   }
 }
 

@@ -2,13 +2,14 @@ import { Router } from "express";
 
 import { userController } from "../controllers/user.controller";
 import { commonMiddleware } from "../middlewares/common.middleware";
+import { UserValidator } from "../validators/user.validator";
 
 const router = Router();
 
 router.get("/", userController.getList);
 router.post(
   "/",
-  //TODO add validation middleware for body
+  commonMiddleware.isBodyValid(UserValidator.createUser),
   userController.create,
 );
 
@@ -20,7 +21,7 @@ router.get(
 router.put(
   "/:userId",
   commonMiddleware.isIdValid("userId"),
-  //TODO add validation middleware for body
+  commonMiddleware.isBodyValid(UserValidator.updateUser),
   userController.updateById,
 );
 router.delete(

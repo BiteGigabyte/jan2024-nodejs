@@ -1,8 +1,11 @@
-// import { ApiError } from "../errors/api-error";
 import { IUser } from "../interfaces/user.interface";
 import { User } from "../models/user.model";
 
 class UserRepository {
+  public async getByParams(params: Partial<IUser>): Promise<IUser> {
+    return await User.findOne(params);
+  }
+
   public async getList(): Promise<IUser[]> {
     return await User.find();
   }
@@ -15,33 +18,14 @@ class UserRepository {
     return await User.findById(userId);
   }
 
-  //TODO
-  public async updateById() {
-    // userId: number, dto: IUser
-    // : Promise<IUser>
-    //   const users = await fsService.read();
-    //   const user = users.find((user) => user.id === userId);
-    //   if (!user) {
-    //     throw new ApiError("User not found", 422);
-    //   }
-    //   if (dto.name) user.name = dto.name;
-    //   if (dto.email) user.email = dto.email;
-    //   if (dto.password) user.password = dto.password;
-    //d
-    //   await fsService.write(users);
-    //   return user;
+  public async updateById(userId: string, dto: IUser): Promise<IUser> {
+    return await User.findByIdAndUpdate(userId, dto, {
+      returnDocument: "after",
+    }); //{ returnDocument: "after" } - повертає після того як зробить update код
   }
 
-  //TODO
-  public async deleteById() // userId: number
-  : Promise<void> {
-    //   const users = await fsService.read();
-    //   const index = users.findIndex((user) => user.id === userId);
-    //   if (index === -1) {
-    //     throw new ApiError("User not found", 422);
-    //   }
-    //   users.splice(index, 1);
-    //   await fsService.write(users);
+  public async deleteById(userId: number): Promise<void> {
+    await User.deleteOne({ _id: userId });
   }
 }
 
