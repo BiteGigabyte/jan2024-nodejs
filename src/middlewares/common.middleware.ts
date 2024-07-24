@@ -8,10 +8,14 @@ class CommonMiddleware {
   public isIdValid(paramName: string) {
     return (req: Request, res: Response, next: NextFunction) => {
       try {
+        // const aaa = 23;
         const id = req.params[paramName];
         if (!isObjectIdOrHexString(id)) {
           throw new ApiError("invalid id", 400);
         }
+        // req.res.locals
+        // req["aaa"] = aaa;
+        // req.res.locals.asd = aaa;
         next();
       } catch (e) {
         next(e);
