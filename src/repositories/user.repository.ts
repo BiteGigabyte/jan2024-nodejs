@@ -24,7 +24,7 @@ class UserRepository {
     }); //{ returnDocument: "after" } - повертає після того як зробить update код
   }
 
-  public async deleteById(userId: number): Promise<void> {
+  public async deleteById(userId: string): Promise<void> {
     await User.deleteOne({ _id: userId });
   }
 }

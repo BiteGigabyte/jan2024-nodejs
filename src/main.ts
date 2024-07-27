@@ -3,12 +3,14 @@ import * as mongoose from "mongoose";
 
 import { configs } from "./configs/config";
 import { ApiError } from "./errors/api-error";
+import { authRouter } from "./routers/auth.router";
 import { userRouter } from "./routers/user.router";
 
 const app = express();
 app.use(express.json()); // щоб база даних розуміла об'єкт який приходить в req
 app.use(express.urlencoded({ extended: true })); // щоб база даних розуміла об'єкт який приходить в req
 
+app.use("/auth", authRouter);
 app.use("/users", userRouter);
 
 app.use(
