@@ -17,16 +17,30 @@ router.post(
   commonMiddleware.isBodyValid(UserValidator.login),
   authController.signIn,
 );
+
 router.post(
   "/refresh",
   authMiddleware.checkRefreshToken,
   authController.refresh,
 );
+
 router.post("/logout", authMiddleware.checkAccessToken, authController.logout);
 router.post(
   "/logout-all",
   authMiddleware.checkAccessToken,
   authController.logoutAll,
+);
+
+router.post(
+  "/forgot-password",
+  commonMiddleware.isBodyValid(UserValidator.forgotPassword),
+  authController.forgotPassword,
+);
+router.put(
+  "/forgot-password",
+  commonMiddleware.isBodyValid(UserValidator.forgotPasswordSet),
+  authMiddleware.checkActionToken,
+  authController.forgotPasswordSet,
 );
 
 export const authRouter = router;
