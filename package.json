@@ -6,6 +6,7 @@
     "start:dev": "rimraf dist && tsc-watch --onSuccess \"npm run watch:server\"",
     "watch:server": "nodemon --exec ts-node src/main.ts",
     "start:prod": "node ./dist/main.js",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prepare": "husky && husky install"
   },
   "keywords": [
@@ -17,11 +18,12 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cron": "^3.1.7",
+    "dayjs": "^1.11.12",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mogoose": "^0.0.1-security",
     "mongoose": "^8.5.1",
     "nodemailer": "^6.9.14",
     "nodemailer-express-handlebars": "^6.1.2"
