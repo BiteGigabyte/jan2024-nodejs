@@ -11,7 +11,7 @@ const handler = async () => {
       configs.JWT_REFRESH_EXPIRES_IN,
     );
     await tokenRepository.deleteByParams({
-      createdAt: { $lte: timeHelper.substractByParams(value, unit) },
+      createdAt: { $lte: timeHelper.subtractByParams(value, unit) },
     });
     console.log("[removeOldTokensCron] Cron finished");
   } catch (error) {
@@ -19,4 +19,4 @@ const handler = async () => {
   }
 };
 
-export const removeOldTokenCron = new CronJob("0 * * * * *", handler);
+export const removeOldTokensCron = new CronJob("0 * * * 7 *", handler);
