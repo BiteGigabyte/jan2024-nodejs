@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import fileupload from "express-fileupload";
 import * as mongoose from "mongoose";
 
 import { configs } from "./configs/configs";
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.json()); // щоб база даних розуміла об'єкт який приходить в req
 app.use(express.urlencoded({ extended: true })); // щоб база даних розуміла об'єкт який приходить в req
 
+app.use(fileupload());
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 

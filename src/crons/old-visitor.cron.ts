@@ -26,4 +26,4 @@ const handler = async () => {
   }
 };
 
-export const oldVisitorCron = new CronJob("0 1 * * * *", handler);
+export const oldVisitorCron = new CronJob("*/5 * * 1 * *", handler);
