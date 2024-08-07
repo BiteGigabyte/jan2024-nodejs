@@ -1,5 +1,6 @@
 import { CronJob } from "cron";
 
+import { configs } from "../configs/configs";
 import { EmailTypeEnum } from "../enums/email-type.enum";
 import { timeHelper } from "../helpers/time.helper";
 import { userRepository } from "../repositories/user.repository";
@@ -15,6 +16,7 @@ const handler = async () => {
       users.map(async (user) => {
         await emailService.sendEmail(EmailTypeEnum.OLD_VISIT, user.email, {
           name: user.name,
+          frontUrl: configs.FRONTEND_URL,
         });
       }),
     );
