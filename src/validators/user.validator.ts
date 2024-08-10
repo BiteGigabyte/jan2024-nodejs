@@ -59,6 +59,6 @@ export class UserValidator {
     orderBy: joi
       .string()
       .valid(...Object.values(UserListOrderByEnum))
-      .default(UserListOrderByEnum),
+      .default(UserListOrderByEnum.NAME),
   });
 }
