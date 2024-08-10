@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import fileupload from "express-fileupload";
+import { rateLimit } from "express-rate-limit";
 import * as mongoose from "mongoose";
 import swaggerUi from "swagger-ui-express";
 
@@ -15,6 +16,7 @@ app.use(express.json()); // щоб база даних розуміла об'є�
 app.use(express.urlencoded({ extended: true })); // щоб база даних розуміла об'єкт який приходить в req
 app.use(fileupload());
 
+app.use(rateLimit({ windowMs: 60 * 1000, limit: 5 })); //перевірка на кількість запитів
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
