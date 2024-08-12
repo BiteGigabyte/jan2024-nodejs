@@ -1,3 +1,4 @@
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import fileupload from "express-fileupload";
 import { rateLimit } from "express-rate-limit";
@@ -12,6 +13,21 @@ import { authRouter } from "./routers/auth.router";
 import { userRouter } from "./routers/user.router";
 
 const app = express();
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: [
+      "Authorization",
+      "Content-Type",
+      "Origin",
+      "Access-Control-Allow-Origin",
+    ],
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+  }),
+);
+
 app.use(express.json()); // щоб база даних розуміла об'єкт який приходить в req
 app.use(express.urlencoded({ extended: true })); // щоб база даних розуміла об'єкт який приходить в req
 app.use(fileupload());
